@@ -11,8 +11,7 @@ A modern, feature-rich user dashboard built with Next.js 15, TypeScript, and Tai
 - 📊 Database integration with Prisma
 - 📱 Responsive design
 - 🌙 Dark mode support
-- 📧 Email functionality with Nodemailer
-- 📈 Data visualization with Recharts
+
 
 ## Prerequisites
 
@@ -25,7 +24,7 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
 ```bash
-git clone [your-repository-url]
+git clone https://github.com/sanaz-shahraeini/web-points-system.git
 cd user-dashboard
 ```
 
