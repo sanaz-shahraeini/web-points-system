@@ -27,7 +27,7 @@ interface Transaction {
 
 export function WalletOverview({ wallet }: { wallet: WalletData | null }) {
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle>Your Wallet</CardTitle>
         <CardDescription>Current balance and points.</CardDescription>
@@ -35,13 +35,13 @@ export function WalletOverview({ wallet }: { wallet: WalletData | null }) {
       <CardContent className="grid gap-4">
         <div className="flex items-center justify-between">
           <span className="text-lg font-medium">Wallet Balance:</span>
-          <span className="text-2xl font-bold text-green-600 dark:text-green-400">
+          <span className="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400">
             ${wallet?.balance ? Number.parseFloat(wallet.balance).toFixed(2) : "0.00"}
           </span>
         </div>
         <div className="flex items-center justify-between">
           <span className="text-lg font-medium">Total Points:</span>
-          <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{wallet?.points ?? 0}</span>
+          <span className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">{wallet?.points ?? 0}</span>
         </div>
       </CardContent>
     </Card>
@@ -75,7 +75,7 @@ export function ChargeWalletForm({ onActionSuccess }: { onActionSuccess: () => v
   }
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle>Charge Wallet</CardTitle>
         <CardDescription>Add funds to your digital wallet.</CardDescription>
@@ -93,6 +93,7 @@ export function ChargeWalletForm({ onActionSuccess }: { onActionSuccess: () => v
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
+              className="w-full"
             />
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>
@@ -131,7 +132,7 @@ export function ConvertPointsForm({ onActionSuccess }: { onActionSuccess: () => 
   }
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle>Convert to Points</CardTitle>
         <CardDescription>Convert your wallet balance to points ($1 = 100 points).</CardDescription>
@@ -149,6 +150,7 @@ export function ConvertPointsForm({ onActionSuccess }: { onActionSuccess: () => 
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
+              className="w-full"
             />
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>
@@ -196,31 +198,35 @@ export function TransferPointsForm({ onActionSuccess }: { onActionSuccess: () =>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid gap-2">
-            <Label htmlFor="recipient-username">Recipient Username</Label>
-            <Input
-              id="recipient-username"
-              type="text"
-              placeholder="username"
-              value={recipientUsername}
-              onChange={(e) => setRecipientUsername(e.target.value)}
-              required
-            />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-2">
+              <Label htmlFor="recipient-username">Recipient Username</Label>
+              <Input
+                id="recipient-username"
+                type="text"
+                placeholder="username"
+                value={recipientUsername}
+                onChange={(e) => setRecipientUsername(e.target.value)}
+                required
+                className="w-full"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="points-amount">Points to Transfer</Label>
+              <Input
+                id="points-amount"
+                type="number"
+                step="1"
+                min="1"
+                placeholder="100"
+                value={points}
+                onChange={(e) => setPoints(e.target.value)}
+                required
+                className="w-full"
+              />
+            </div>
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="points-amount">Points to Transfer</Label>
-            <Input
-              id="points-amount"
-              type="number"
-              step="1"
-              min="1"
-              placeholder="100"
-              value={points}
-              onChange={(e) => setPoints(e.target.value)}
-              required
-            />
-          </div>
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button type="submit" className="w-full sm:w-auto" disabled={isLoading}>
             {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Transfer Points"}
           </Button>
         </form>
@@ -231,7 +237,7 @@ export function TransferPointsForm({ onActionSuccess }: { onActionSuccess: () =>
 
 export function TransactionHistoryTable({ transactions }: { transactions: Transaction[] }) {
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Transaction History</CardTitle>
         <CardDescription>A complete record of your wallet and point activities.</CardDescription>
@@ -240,25 +246,25 @@ export function TransactionHistoryTable({ transactions }: { transactions: Transa
         {transactions.length === 0 ? (
           <p className="text-center text-muted-foreground">No transactions yet.</p>
         ) : (
-          <div className="overflow-x-auto">
-            <Table>
+          <div className="overflow-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+            <Table className="min-w-full">
               <TableHeader>
                 <TableRow>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Party</TableHead>
-                  <TableHead className="text-right">Date</TableHead>
+                  <TableHead className="whitespace-nowrap">Type</TableHead>
+                  <TableHead className="whitespace-nowrap">Amount</TableHead>
+                  <TableHead className="hidden sm:table-cell">Description</TableHead>
+                  <TableHead className="hidden md:table-cell">Party</TableHead>
+                  <TableHead className="text-right whitespace-nowrap">Date</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {transactions.map((tx) => (
                   <TableRow key={tx.id}>
-                    <TableCell className="font-medium">{tx.type}</TableCell>
-                    <TableCell>{tx.amount}</TableCell>
-                    <TableCell>{tx.description}</TableCell>
-                    <TableCell>{tx.party}</TableCell>
-                    <TableCell className="text-right text-sm text-muted-foreground">{tx.date}</TableCell>
+                    <TableCell className="font-medium whitespace-nowrap">{tx.type}</TableCell>
+                    <TableCell className="whitespace-nowrap">{tx.amount}</TableCell>
+                    <TableCell className="hidden sm:table-cell">{tx.description}</TableCell>
+                    <TableCell className="hidden md:table-cell">{tx.party}</TableCell>
+                    <TableCell className="text-right whitespace-nowrap text-sm text-muted-foreground">{tx.date}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

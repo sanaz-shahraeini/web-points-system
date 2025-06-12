@@ -87,10 +87,10 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <header className="mb-8 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Welcome, {session?.user?.name || session?.user?.email}!</h1>
-        <Button onClick={() => signOut()} variant="outline">
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <header className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h1 className="text-2xl sm:text-3xl font-bold break-words">Welcome, {session?.user?.name || session?.user?.email}!</h1>
+        <Button onClick={() => signOut()} variant="outline" className="self-start">
           Sign Out
         </Button>
       </header>
@@ -100,14 +100,14 @@ export default function DashboardPage() {
           <Loader2 className="h-8 w-8 animate-spin" />
         </div>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           <WalletOverview wallet={wallet} />
           <ChargeWalletForm onActionSuccess={fetchData} />
           <ConvertPointsForm onActionSuccess={fetchData} />
-          <div className="lg:col-span-3">
+          <div className="sm:col-span-2 lg:col-span-3">
             <TransferPointsForm onActionSuccess={fetchData} />
           </div>
-          <div className="lg:col-span-3">
+          <div className="sm:col-span-2 lg:col-span-3">
             <TransactionHistoryTable transactions={transactions} />
           </div>
         </div>

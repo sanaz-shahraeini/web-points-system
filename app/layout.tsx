@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Web points system",
   description: "A user wallet and points system built with Next.js",
- 
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 }
 
 export default async function RootLayout({
