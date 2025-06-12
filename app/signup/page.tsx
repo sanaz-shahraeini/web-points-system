@@ -11,11 +11,11 @@ export default async function SignupPage() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-950">
-      <div className="absolute top-4 right-4">
+    <div className="relative min-h-screen bg-gray-100 dark:bg-gray-950">
+      <div className="fixed top-4 right-4 z-50">
         <ThemeToggle />
       </div>
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <SignupForm />
       </div>
     </div>

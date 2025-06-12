@@ -101,7 +101,9 @@ export default function DashboardPage() {
       <header className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="text-2xl sm:text-3xl font-bold break-words">Welcome, {session?.user?.name || session?.user?.email}!</h1>
         <div className="flex items-center gap-2">
-          <ThemeToggle />
+          <div className="fixed top-4 right-4 z-50 sm:static sm:z-auto">
+            <ThemeToggle />
+          </div>
           <Button onClick={() => signOut()} variant="outline" className="self-start">
             Sign Out
           </Button>
