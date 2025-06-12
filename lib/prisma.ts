@@ -1,9 +1,11 @@
 import { PrismaClient } from "@prisma/client"
 
+declare global {
+  var prisma: PrismaClient | undefined
+}
+
 let prisma: PrismaClient
 
-// This is needed to prevent multiple instances of Prisma Client in development
-// (which can happen with Next.js hot reloading).
 if (process.env.NODE_ENV === "production") {
   prisma = new PrismaClient()
 } else {
