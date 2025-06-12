@@ -9,9 +9,9 @@ import { auth } from "@/lib/auth"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Wallet & Points App",
+  title: "Web points system",
   description: "A user wallet and points system built with Next.js",
-  generator: "v0.dev",
+ 
 }
 
 export default async function RootLayout({
