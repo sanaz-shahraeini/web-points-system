@@ -47,7 +47,16 @@ export default function DashboardPage() {
         if (walletRes.ok) {
           setWallet(walletData)
         } else {
-          console.error("Failed to fetch wallet:", walletData.message)
+          if (walletRes.status === 401) {
+            toast({
+              title: "Unauthorized",
+              description: "Your session has expired. Please log in again.",
+              variant: "destructive",
+            })
+            signOut()
+          } else {
+            console.error("Failed to fetch wallet:", walletData.message)
+          }
           setWallet(null)
         }
 
@@ -68,7 +77,7 @@ export default function DashboardPage() {
         setIsLoadingData(false)
       }
     }
-  }, [status, toast])
+  }, [status, toast, signOut])
 
   useEffect(() => {
     fetchData()
