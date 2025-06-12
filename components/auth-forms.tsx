@@ -122,37 +122,48 @@ export function SignupForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
   const router = useRouter()
   const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+    setErrorMessage("")
 
     try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, password }),
+      console.log("Attempting signup with:", { email, name })
+      
+      const result = await signIn("credentials", {
+        redirect: false,
+        name,
+        email,
+        password,
+        isSignUp: true,
       })
 
-      const data = await response.json()
+      console.log("Signup result:", result)
 
-      if (!response.ok) {
-        throw new Error(data.message || "Signup failed")
+      if (result?.error) {
+        setErrorMessage(result.error)
+        toast({
+          title: "Signup Failed",
+          description: result.error || "Failed to create account",
+          variant: "destructive",
+        })
+      } else {
+        toast({
+          title: "Signup Successful",
+          description: "Account created. Redirecting to login...",
+        })
+        router.push("/login")
       }
-
-      toast({
-        title: "Signup Successful",
-        description: "Account created. Redirecting to login...",
-      })
-      router.push("/login")
     } catch (error: any) {
+      console.error("Signup error:", error)
+      setErrorMessage(error.message || "An error occurred during signup")
       toast({
-        title: "Signup Failed",
-        description: error.message,
+        title: "Signup Error",
+        description: error.message || "An error occurred during signup",
         variant: "destructive",
       })
     } finally {
@@ -168,6 +179,11 @@ export function SignupForm() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {errorMessage && (
+            <div className="rounded-md bg-red-50 p-3 text-sm text-red-500">
+              {errorMessage}
+            </div>
+          )}
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input

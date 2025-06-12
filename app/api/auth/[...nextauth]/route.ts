@@ -14,6 +14,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        name: { label: "Name", type: "text" },
+        isSignUp: { label: "Is Sign Up", type: "boolean" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -22,6 +24,36 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
 
         try {
+          // Check if this is a signup attempt
+          if (credentials.isSignUp) {
+            // Check if user already exists
+            const existingUser = await prisma.user.findUnique({
+              where: { email: String(credentials.email) },
+            })
+
+            if (existingUser) {
+              throw new Error("User with this email already exists")
+            }
+
+            // Create new user
+            const hashedPassword = await bcrypt.hash(String(credentials.password), 10)
+            const newUser = await prisma.user.create({
+              data: {
+                email: String(credentials.email),
+                password: hashedPassword,
+                name: String(credentials.name),
+              },
+            })
+
+            console.log("Signup successful for:", credentials.email)
+            return {
+              id: newUser.id,
+              email: newUser.email,
+              name: newUser.name,
+            }
+          }
+
+          // Handle login flow
           const user = await prisma.user.findUnique({
             where: { email: String(credentials.email) },
           })
@@ -49,7 +81,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
         } catch (error) {
           console.error("Auth error:", error)
-          return null
+          throw error
         }
       },
     }),
