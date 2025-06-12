@@ -78,7 +78,7 @@ export function ChargeWalletForm({ onActionSuccess }: { onActionSuccess: () => v
     <Card className="h-full">
       <CardHeader>
         <CardTitle>Charge Wallet</CardTitle>
-        <CardDescription>Add funds to your digital wallet.</CardDescription>
+        <CardDescription>Add funds to your digital wallet.<br/>(1$ = 100 points)</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -135,7 +135,7 @@ export function ConvertPointsForm({ onActionSuccess }: { onActionSuccess: () => 
     <Card className="h-full">
       <CardHeader>
         <CardTitle>Convert to Points</CardTitle>
-        <CardDescription>Convert your wallet balance to points ($1 = 100 points).</CardDescription>
+        <CardDescription>Convert your wallet balance to points <br/>($1 = 100 points).</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
