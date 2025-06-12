@@ -64,7 +64,7 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="mx-auto max-w-sm">
+    <Card className="mx-auto w-full sm:w-[400px] md:w-[500px] lg:w-[600px] max-w-lg">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Login</CardTitle>
         <CardDescription>Enter your email below to login to your account</CardDescription>
@@ -172,7 +172,7 @@ export function SignupForm() {
   }
 
   return (
-    <Card className="mx-auto max-w-sm">
+    <Card className="mx-auto w-full sm:w-[400px] md:w-[500px] lg:w-[600px] max-w-lg">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Sign Up</CardTitle>
         <CardDescription>Create an account to get started</CardDescription>
