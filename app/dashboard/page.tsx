@@ -11,6 +11,7 @@ import {
   TransferPointsForm,
   TransactionHistoryTable,
 } from "@/components/dashboard-components"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { useToast } from "@/hooks/use-toast"
 import { Loader2 } from "lucide-react"
 
@@ -99,9 +100,12 @@ export default function DashboardPage() {
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <header className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="text-2xl sm:text-3xl font-bold break-words">Welcome, {session?.user?.name || session?.user?.email}!</h1>
-        <Button onClick={() => signOut()} variant="outline" className="self-start">
-          Sign Out
-        </Button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Button onClick={() => signOut()} variant="outline" className="self-start">
+            Sign Out
+          </Button>
+        </div>
       </header>
 
       {isLoadingData ? (
